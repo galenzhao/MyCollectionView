@@ -8,8 +8,8 @@
 
 #import "GridLayout.h"
 
-#define ITEM_WIDTH 75
-#define ITEM_HEIGHT 50
+//#define _itemWidth 75
+//#define _itemHeight 50
 
 @interface GridLayout()
 
@@ -21,13 +21,23 @@
 
 @implementation GridLayout
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _itemWidth = 75;
+        _itemHeight = 50;
+    }
+    return self;
+}
+
 -(void)prepareLayout
 {
     [super prepareLayout];
     
     self.numRows = [self.collectionView numberOfSections];
     self.numCols = [self.collectionView numberOfItemsInSection:0];  // assume same for all rows for now
-    self.contentSize = CGSizeMake(self.numCols * ITEM_WIDTH, self.numRows * ITEM_HEIGHT);
+    self.contentSize = CGSizeMake(self.numCols * _itemWidth, self.numRows * _itemHeight);
 }
 
 -(CGSize)collectionViewContentSize
@@ -40,10 +50,10 @@
     return NO;
 }
 
-- (PSUICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path
 {
-    PSUICollectionViewLayoutAttributes* attributes = [PSUICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:path];
-    attributes.frame = CGRectMake(path.item * ITEM_WIDTH, path.section * ITEM_HEIGHT, ITEM_WIDTH, ITEM_HEIGHT);
+    UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:path];
+    attributes.frame = CGRectMake(path.item * _itemWidth, path.section * _itemHeight, _itemWidth, _itemHeight);
     return attributes;
 }
 
@@ -51,10 +61,10 @@
 {
     NSMutableArray* attributes = [NSMutableArray array];
     
-    NSUInteger startRow = floorf(rect.origin.y / ITEM_HEIGHT);
-    NSUInteger endRow = MIN(self.numRows -1, ceilf(CGRectGetMaxY(rect) / ITEM_HEIGHT));
-    NSUInteger startCol = floorf(rect.origin.x / ITEM_WIDTH);
-    NSUInteger endCol = MIN(self.numCols -1, ceilf(CGRectGetMaxX(rect) / ITEM_WIDTH));
+    NSUInteger startRow = floorf(rect.origin.y / _itemHeight);
+    NSUInteger endRow = MIN(self.numRows -1, ceilf(CGRectGetMaxY(rect) / _itemHeight));
+    NSUInteger startCol = floorf(rect.origin.x / _itemWidth);
+    NSUInteger endCol = MIN(self.numCols -1, ceilf(CGRectGetMaxX(rect) / _itemWidth));
     for (NSUInteger r = startRow; r <= endRow; r++)
     {
         for (NSUInteger c = startCol; c <=  endCol; c++)

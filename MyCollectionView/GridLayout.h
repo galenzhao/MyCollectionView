@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GridLayout : PSUICollectionViewLayout
+@interface GridLayout : UICollectionViewLayout
+{
+    
+}
+@property (nonatomic, readwrite) CGFloat itemWidth;
+@property (nonatomic, readwrite) CGFloat itemHeight;
 
 @end
